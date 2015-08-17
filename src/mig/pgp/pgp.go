@@ -120,6 +120,10 @@ func GetFingerprintFromSignature(data string, signature string, keyring io.Reade
 	return
 }
 
+func GetFingerprintFromEntity(entity *openpgp.Entity) string {
+	return hex.EncodeToString(entity.PrimaryKey.Fingerprint[:])
+}
+
 func GenerateKeyPair(name, desc, email string) (pubkey, privkey []byte, fp string, err error) {
 	defer func() {
 		if e := recover(); e != nil {

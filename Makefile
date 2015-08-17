@@ -325,6 +325,10 @@ test-modules:
 	# test all modules
 	$(GOTEST) mig/modules...
 
+test-mig:
+	# test MIG package
+	$(GOTEST) mig
+
 clean-agent:
 	find bin/ -name mig-agent* -exec rm {} \;
 	rm -rf packages

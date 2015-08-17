@@ -7,12 +7,11 @@
 package main
 
 import (
+	"code.google.com/p/gcfg"
 	"fmt"
 	"io/ioutil"
 	"mig"
 	"time"
-
-	"code.google.com/p/gcfg"
 )
 
 type config struct {
@@ -22,10 +21,16 @@ type config struct {
 		DiscoverPublicIP bool
 		CheckIn          bool
 		Relay            string
+		Proxy            []string
 		Socket           string
 		HeartbeatFreq    string
 		ModuleTimeout    string
 		Api              string
+	}
+	ACL struct {
+		MasterKey  []string
+		Signatures uint
+		Name       []string
 	}
 	Certs struct {
 		Ca, Cert, Key string
@@ -53,6 +58,10 @@ func configLoad(path string) (err error) {
 	LOGGINGCONF = config.Logging
 	AMQPBROKER = config.Agent.Relay
 	APIURL = config.Agent.Api
+	PROXIES = config.Agent.Proxy
+	ACLKEYS = config.ACL.MasterKey
+	ACLSIGMIN = config.ACL.Signatures
+	ACL = config.ACL.Name
 	HEARTBEATFREQ, err = time.ParseDuration(config.Agent.HeartbeatFreq)
 	if err != nil {
 		panic(err)

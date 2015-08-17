@@ -74,6 +74,18 @@ That's it. Now to build the agent, you need to perform some configuration first.
 Agent Configuration
 -------------------
 
+The agent can be configured in two ways: the configuration can be built into the
+agent before compilation, or it can be fed via an external file. The builtin
+method is useful when the target environment is not managed, and pushing or
+updating configuration files is difficult. The second method is preferred when
+everything is controlled by configuration management, like puppet.
+
+Both methods use the exact same configuration parameters but in different files.
+
+It is important to note that when an external configuration file is used, the
+builtin configuration is entirely overriden. MIG does not attempt to merge
+configurations, you're either using the builtin one, or the external one.
+
 The MIG Agent configuration must be prepared before build. The configuration is
 hardwired into the agent, such that no external file is required to run it.
 
