@@ -246,7 +246,27 @@ func authenticate(pass handler, requirePerm int64) handler {
 			inv.Permissions.AdminSet()
 			goto authorized
 		}
-		if r.Header.Get("X-PGPAUTHORIZATION") == "" {
+		if r.Header.Get("secretkey") == "" {
+			inv.Name = "authmissing"
+			inv.ID = -1
+			resource := cljs.New(fmt.Sprintf("%s%s", ctx.Server.Host, r.URL.String()))
+			resource.SetError(cljs.Error{Code: fmt.Sprintf("%.0f", opid), Message: "secretkey missing"})
+			respond(http.StatusUnauthorized, resource, w, r)
+			fmt.Fprintf(w, "error in secret key")
+			return
+
+		}
+		inv,err := InvestigatorBySecretkey(r.Header.Get("secretkey"))
+		if err != nil {
+			inv.Name = "authfailed"
+			inv.ID = -1
+			resource := cljs.New(fmt.Sprintf("%s%s", ctx.Server.Host, r.URL.String()))
+			resource.SetError(cljs.Error{Code: fmt.Sprintf("%.0f", opid), Message: fmt.Sprintf("Authorization verification failed with error '%v'", err)})
+			respond(http.StatusUnauthorized, resource, w, r)
+			return
+		}	
+
+		/*if r.Header.Get("X-PGPAUTHORIZATION") == "" {
 			inv.Name = "authmissing"
 			inv.ID = -1
 			resource := cljs.New(fmt.Sprintf("%s%s", ctx.Server.Host, r.URL.String()))
@@ -263,7 +283,7 @@ func authenticate(pass handler, requirePerm int64) handler {
 			respond(http.StatusUnauthorized, resource, w, r)
 			return
 		}
-
+		*/
 		// As a final phase, validate the investigator has permission to access
 		// the endpoint
 		if !inv.CheckPermission(requirePerm) {

@@ -19,6 +19,7 @@ import (
 func getCommand(respWriter http.ResponseWriter, request *http.Request) {
 	var err error
 	opid := getOpID(request)
+	invName := context.Get(r, authenticatedInvName);
 	loc := fmt.Sprintf("%s%s", ctx.Server.Host, request.URL.String())
 	resource := cljs.New(loc)
 	defer func() {
@@ -45,7 +46,7 @@ func getCommand(respWriter http.ResponseWriter, request *http.Request) {
 				// not found, return 404
 				resource.SetError(cljs.Error{
 					Code:    fmt.Sprintf("%.0f", opid),
-					Message: fmt.Sprintf("Command ID '%.0f' not found", commandID)})
+					Message: fmt.Sprintf("Command ID '%.0f' not found, investigator name = %s", commandID,invName)}) //changed
 				respond(http.StatusNotFound, resource, respWriter, request)
 				return
 			} else {

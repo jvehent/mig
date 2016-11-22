@@ -82,6 +82,25 @@ func (db *DB) InvestigatorByFingerprint(fp string) (inv mig.Investigator, err er
 	inv.Permissions.FromMask(perm)
 	return
 }
+// InvestigatorBySecretkey searches the database for an investigator that has given secretkey
+func (db *DB) InvestigatorBySecretkey(key string) (inv mig.Investigator, err error) {
+	err = db.c.QueryRow(`SELECT investigators.id, investigators.name, investigators.secretkey, 
+		investigators.status, investigators.createdat,
+		investigators.lastmodified, investigators.permissions
+		FROM investigators WHERE secretkey = $1`,key
+	).Scan(&inv.ID, &inv.Name, &inv.secretkey, &inv.Status,
+		&inv.CreatedAt, &inv.LastModified, &perm)
+	if err != nil {
+		err = fmt.Errorf("Error while validating investigator: '%v'", err)
+		return 
+	}
+	if err == sql.ErrNoRows {
+		err = fmt.Errorf("InvestigatorBySecretkey: no investigator found for key '%s'", key)
+		return 
+	}
+	inv.Permissions.FromMask(perm)
+	return
+}
 
 //InvestigatorByActionID returns the list of investigators that signed a given action
 func (db *DB) InvestigatorByActionID(aid float64) (invs []mig.Investigator, err error) {
