@@ -1,12 +1,16 @@
   <nav>
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo"><i class="material-icons left"><img src="img/mig_logo.png"></i>Mozilla Investigator</a>
+      <a href="#!" class="brand-logo"><i class="material-icons left"><img src="img/mig_logo.png" height="100%" width="15%"></i>Mozilla Investigator</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html"><i class="material-icons left">search</i></a></li>
-        <li><a href="badges.html"><i class="material-icons right">view_module</i>Link with Right Icon</a></li>
+        <li><a href="#!"><i class="material-icons left">search</i></a></li>
+        <li><a href="#!"><i class="material-icons right"></i>Link with Right Icon</a></li>
       </ul>
     </div>
   </nav>
-  <body>
-  		<h1>Welcome to MIG</h1>
+  <body >
+  		<div id="LatestActions">
+            <button ng-click="getHeartbeat()">Get Heartbeat</button>
+            {{heartbeat}}
+        
+        </div>
   </body>
