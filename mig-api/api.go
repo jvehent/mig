@@ -70,6 +70,11 @@ func main() {
 	r := mux.NewRouter()
 	s := r.PathPrefix(ctx.Server.BaseRoute).Subrouter()
 
+	// web-client home
+	s.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    	        http.ServeFile(w, r, r.URL.Path[1:]+"client/mig-webapp/")
+    })
+
 	// unauthenticated endpoints
 	s.HandleFunc("/heartbeat", getHeartbeat).Methods("GET")
 	s.HandleFunc("/ip", getIP).Methods("GET")

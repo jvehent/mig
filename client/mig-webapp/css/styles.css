@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box; }
+
+html {
+  height: 100%; 
+}
+
+body {
+  /*background-color: #fff;*/
+  height: 100%; 
+}
