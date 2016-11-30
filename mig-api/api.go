@@ -70,11 +70,6 @@ func main() {
 	r := mux.NewRouter()
 	s := r.PathPrefix(ctx.Server.BaseRoute).Subrouter()
 
-	// web-client home
-	s.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    	        http.ServeFile(w, r, r.URL.Path[1:]+"client/mig-webapp/")
-    })
-
 	// unauthenticated endpoints
 	s.HandleFunc("/heartbeat", getHeartbeat).Methods("GET")
 	s.HandleFunc("/ip", getIP).Methods("GET")
@@ -133,11 +128,18 @@ func main() {
 
 	// all set, start the http handler
 	http.Handle("/", context.ClearHandler(r))
+	//web client
+	http.Handle("/mig-webapp/", http.StripPrefix("/mig-webapp/", http.FileServer(http.Dir("./client/mig-webapp/"))))
+	http.Handle("/css/", http.FileServer(http.Dir("./client/mig-webapp/")))
+	http.Handle("/js/", http.FileServer(http.Dir("./client/mig-webapp")))
+	http.Handle("/templates/", http.FileServer(http.Dir("./client/mig-webapp"))
 	listenAddr := fmt.Sprintf("%s:%d", ctx.Server.IP, ctx.Server.Port)
 	err = http.ListenAndServe(listenAddr, nil)
 	if err != nil {
 		panic(err)
 	}
+
+	//
 }
 
 // The category of request being made, this is set in the request context
