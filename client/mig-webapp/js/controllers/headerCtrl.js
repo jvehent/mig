@@ -1,22 +1,22 @@
-app.controller('headerCtrl', function($scope, $state, authUser){
-	if(authUser.isLoggedIn() == false){
-		$state.go('login');
-	}
+app.controller('headerCtrl', function ($scope, $state) {
+/*    if (authUser.isLoggedIn() == false) {
+        $state.go('login');
+    }
 
-	alert("ad");
+    alert("ad");
 
-    $scope.profile = function(){
+    $scope.profile = function () {
         $state.go('profile');
     }
-    $scope.logout = function(){
+    $scope.logout = function () {
         authUser.logout();
         $state.go('home');
     }
-	$scope.settings = function(){
+    $scope.settings = function () {
         $state.go('settings');
     }
-    $scope.changedp = function(){
+    $scope.changedp = function () {
         $state.go('photoUpload');
     }
-    $scope.imgurl = 'uploads/user/'+authUser.getUsername()+".jpg";
+    $scope.imgurl = 'uploads/user/' + authUser.getUsername() + ".jpg";*/
 });

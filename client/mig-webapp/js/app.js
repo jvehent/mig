@@ -1,1 +1,1 @@
-var app = angular.module('mig-webapp', ['ui.router', 'ngStorage','routeStyles']);
+var app = angular.module('mig-webapp', ['ngMaterial', 'ui.router' , 'angularCSS']);

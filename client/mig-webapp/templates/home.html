@@ -1,16 +1,318 @@
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo"><i class="material-icons left"><img src="img/mig_logo.png" height="100%" width="15%"></i>Mozilla Investigator</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#!"><i class="material-icons left">search</i></a></li>
-        <li><a href="#!"><i class="material-icons right"></i>Link with Right Icon</a></li>
-      </ul>
-    </div>
-  </nav>
-  <body >
-  		<div id="LatestActions">
-            <button ng-click="getHeartbeat()">Get Heartbeat</button>
-            {{heartbeat}}
-        
+<section flex layout="row" ng-cloak>
+    <div flex="50" layout="column">
+        <div flex>
+            <h2 flex style="font-family: 'Eczar', serif; font-size:40px; margin-bottom:0; margin-top:10px; margin-left:2%;">Mozilla Investigator</h2>
+            <h3 style="margin-left:10%; margin-top:0;"> Mozilla's real-time digital forensics and investigation platform </h3>
         </div>
-  </body>
+        <div flex>
+
+        </div>
+    </div>
+    <div flex="30" layout="column">
+        <span flex></span>
+        <img style="width:100%; height:auto;" src="./img/mig_logo.png" alt="mig logo">
+        <span flex></span>
+    </div>
+    <div flex="20">
+
+    </div>
+</section>
+
+
+<md-toolbar class="md-hue-4" ng-cloak>
+    <div class="md-toolbar-tools">
+        <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="modules label">
+            <md-icon md-svg-icon="./img/icons/ic_menu_white_24px.svg"></md-icon>
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" aria-label="toolbar button1">
+            Actions
+        </md-button>
+        <md-button class="md-raised" aria-label="toolbar button2">
+            Investigator
+        </md-button>
+        <md-button class="md-raised" aria-label="toolbar button3">
+            Loader
+        </md-button>
+        <md-button class="md-raised" aria-label="toolbar button4">
+            Manifest
+        </md-button>
+        <md-button class="md-raised" aria-label="toolbar button5">
+            History
+        </md-button>
+        <md-button class="md-raised" aria-label="toolbar button6">
+            Search
+        </md-button>
+    </div>
+</md-toolbar>
+<div layout="column" ng-cloak>
+    <!--    <div flex>-->
+    <md-content layout="row" flex>
+
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" style="max-width:280px; background-color:rgb(16, 108, 200);">
+            <md-toolbar class="md-theme-light" style="background-color:#0D47A1;">
+                <h1 class="md-toolbar-tools">Modules</h1>
+            </md-toolbar>
+            <md-content style="background-color:rgb(16, 108, 200);">
+                <form>
+                    <md-input-container layout="column">
+                        <md-button flex id="moduleItem" ng-click="open()" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                File
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button flex id="moduleItem" ng-click="" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                Memory
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button flex id="moduleItem" ng-click="" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                NetStat
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button flex id="moduleItem" ng-click="" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                Package
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button flex id="moduleItem" ng-click="" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                Scribe
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button flex id="moduleItem" ng-click="" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                Ping
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                        <md-button flex id="moduleItem" ng-click="" style="color:white; margin:0;" layout="row">
+                            <span flex></span>
+                            <div flex>
+                                TimeDrift
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_white_24px.svg"></md-icon>
+                        </md-button>
+                    </md-input-container>
+                </form>
+            </md-content>
+        </md-sidenav>
+        <div flex layout-padding>
+            <md-content>
+                <md-toolbar id="setToolbar" ng-click="showDashboard=!showDashboard">
+                    <div class="md-toolbar-tools">
+                        <h2><span>Dashboard</span></h2>
+                        <span flex></span>
+                        <md-icon md-svg-src="./img/icons/ic_keyboard_arrow_down_white_24px.svg" ng-class="{'rotate':showDashboard,'rotate_disable':!showDashboard}"></md-icon>
+                    </div>
+                </md-toolbar>
+                <div class="frame md-whiteframe-glow-z1" ng-class="{'openDashboard':showDashboard,'closeDashboard':!showDashboard}" ng-if="showDashboard" layout-padding>
+                    <!--TODO: use API dashboard here-->
+                    <!-- {{dashboard}} -->
+                    <div layout="column">
+                        <div flex layout="row">
+                            <div flex>
+                                <h3>Agents and Endpoints summary:</h3>
+
+                                <ul>
+                                    <li>
+                                        {{dashboard[0].data[0].value}} online agents on {{dashboard[0].data[2].value}} endpoints
+                                    </li>
+                                    <li>
+                                        {{dashboard[0].data[3].value}} idle agents on {{dashboard[0].data[5].value}} endpoints
+                                    </li>
+                                    <li>
+                                        {{dashboard[0].data[7].value}} endpoints are running 2 or more agents
+                                    </li>
+                                    <li>
+                                        {{dashboard[0].data[6].value}} endpoints appeared over the last 7 days
+                                    </li>
+                                    <li>
+                                        {{dashboard[0].data[8].value}} endpoints disappeared over the last 7 days
+                                    </li>
+                                    <li>
+                                        {{dashboard[0].data[9].value}} endpoints have been flapping
+                                    </li>
+                                </ul>
+                            </div>
+                            <div flex>
+                                <h3>Online agents by version:</h3>
+                                <ul>
+                                    <li ng-repeat="data in dashboard[0].data[1].value">
+                                        {{data.version}}: {{data.count}} agent
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div flex>
+                            <h3>Idle agents by version: </h3> {{dashboard[0].data[4].value}}
+                            <h3>Latest Actions</h3>
+                            <div layout="row">
+                                <div flex layout="column">
+                                    <h3>ID</h3>
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="data in dashboard[1].data">
+                                            {{data.value.id}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div flex layout="column">
+                                    <h3>Name</h3>
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="data in dashboard[1].data">
+                                            {{data.value.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div flex layout="column">
+                                    <h3>Sent</h3>
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="data in dashboard[1].data">
+                                            {{data.value.counters.sent}}
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <div flex layout="column">
+                                    <h3>Date</h3>
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="data in dashboard[1].data">
+                                            {{data.value.starttime}}
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <div flex layout="column">
+                                    <h3>Investigators</h3>
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="data in dashboard[1].data">
+                                            <span ng-repeat="inv in data.value.investigators">{{inv.name}} </span>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <md-whiteframe style="margin:10px; padding-left:10px; background-color: #FAFAFA " class="md-whiteframe-5dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout="row" ng-if="file">
+                    <div flex layout="column">
+                        <h3>INPUTS</h3>
+                        <div>
+                            <md-input-container>
+                                <label>Path</label>
+                                <input ng-model="path">
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container>
+                                <label>Name</label>
+                                <input ng-model="name">
+                            </md-input-container>
+                        </div>
+                        <div>
+                            Size:
+                            <md-input-container>
+                                <md-select ng-model="sym">
+                                    <md-option value="less">
+                                        less than
+                                    </md-option>
+                                    <md-option value="eq">
+                                        equal to
+                                    </md-option>
+                                    <md-option value="gr">
+                                        greater than
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <!--            <md-divider style="transform: rotate(90deg);"></md-divider>-->
+                    <div flex>
+                        <h3>OUTPUT</h3>
+
+                    </div>
+                </md-whiteframe>
+            </md-content>
+        </div>
+    </md-content>
+    <!--    </div>-->
+</div>
+
+
+
+<!--<div id="LatestActions">
+    <button ng-click="getHeartbeat()">Get Heartbeat</button>
+    {{heartbeat}}
+
+</div>-->
+<!-------------------------------------------------templates--------------------------------------------->
+<script type="text/ng-template" id="action.tmpl.html">
+    <md-dialog aria-label="Orders" ng-cloak>
+        <form>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>Orders</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="cancel()">
+                        <md-icon md-svg-src="./styles/img/icons/ic_close_white_24px.svg" aria-label="Close dialog"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <div class="md-dialog-content" layout-align="center center" layout="column">
+                    <h2>The following orders are available under action</h2>
+                    <ul style="list-style: none;">
+                        <li>
+                            <md-button class="md-primary" ng-click="action($event)">add operation</md-button>
+                        </li>
+                        <li>
+                            <md-button class="md-primary">compress</md-button>
+                        </li>
+                        <li>
+                            <md-button class="md-primary">listagents</md-button>
+                        </li>
+                        <li>
+                            <md-button class="md-primary">deloperation</md-button>
+                        </li>
+                        <li>
+                            <md-button class="md-primary">details</md-button>
+                        </li>
+                    </ul>
+                </div>
+            </md-dialog-content>
+
+            <md-dialog-actions layout="row">
+                <md-button>
+                    Cancel
+                </md-button>
+                <span flex></span>
+                <md-button ng-click="answer('useful')" md-autofocus>
+                    Okay
+                </md-button>
+            </md-dialog-actions>
+        </form>
+    </md-dialog>
+</script>

@@ -130,10 +130,13 @@ func main() {
 	http.Handle("/", context.ClearHandler(r))
 	
 	//web client
-	http.Handle("/webapp/", http.StripPrefix("/webapp/", http.FileServer(http.Dir("./client/mig-webapp/"))))
+	http.Handle("/mig-webapp/", http.FileServer(http.Dir("./client/")))
 	http.Handle("/css/", http.FileServer(http.Dir("./client/mig-webapp/")))
 	http.Handle("/js/", http.FileServer(http.Dir("./client/mig-webapp")))
 	http.Handle("/templates/", http.FileServer(http.Dir("./client/mig-webapp")))
+	http.Handle("/fonts/", http.FileServer(http.Dir("./client/mig-webapp")))
+	http.Handle("/img/", http.FileServer(http.Dir("./client/mig-webapp")))
+	
 	listenAddr := fmt.Sprintf("%s:%d", ctx.Server.IP, ctx.Server.Port)
 	err = http.ListenAndServe(listenAddr, nil)
 	if err != nil {

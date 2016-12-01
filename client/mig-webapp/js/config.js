@@ -1,12 +1,14 @@
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
-	$locationProvider.html5Mode(true);
+app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-	$urlRouterProvider.otherwise('/');
-	
-	$stateProvider
-	.state('home', {
-		url : '/',
-		templateUrl : '/templates/home.html',
-		controller : 'homeCtrl'
-	})
+    $locationProvider.html5Mode(true);
+
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+        .state('home', {
+            url: '/',
+            templateUrl: './templates/home.html',
+            controller: 'homeCtrl'
+        });
+
 });
