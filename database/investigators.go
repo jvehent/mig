@@ -84,11 +84,12 @@ func (db *DB) InvestigatorByFingerprint(fp string) (inv mig.Investigator, err er
 }
 // InvestigatorBySecretkey searches the database for an investigator that has given secretkey
 func (db *DB) InvestigatorBySecretkey(key string) (inv mig.Investigator, err error) {
+	var perm int64
 	err = db.c.QueryRow(`SELECT investigators.id, investigators.name, investigators.secretkey, 
 		investigators.status, investigators.createdat,
 		investigators.lastmodified, investigators.permissions
 		FROM investigators WHERE secretkey = $1`,
-		key).Scan(&inv.ID, &inv.Name, &inv.secretkey, &inv.Status,
+		key).Scan(&inv.ID, &inv.Name, &inv.Secretkey, &inv.Status,
 		&inv.CreatedAt, &inv.LastModified, &perm)
 	if err != nil {
 		err = fmt.Errorf("Error while validating investigator: '%v'", err)

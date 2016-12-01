@@ -128,11 +128,12 @@ func main() {
 
 	// all set, start the http handler
 	http.Handle("/", context.ClearHandler(r))
+	
 	//web client
-	http.Handle("/mig-webapp/", http.StripPrefix("/mig-webapp/", http.FileServer(http.Dir("./client/mig-webapp/"))))
+	http.Handle("/webapp/", http.StripPrefix("/webapp/", http.FileServer(http.Dir("./client/mig-webapp/"))))
 	http.Handle("/css/", http.FileServer(http.Dir("./client/mig-webapp/")))
 	http.Handle("/js/", http.FileServer(http.Dir("./client/mig-webapp")))
-	http.Handle("/templates/", http.FileServer(http.Dir("./client/mig-webapp"))
+	http.Handle("/templates/", http.FileServer(http.Dir("./client/mig-webapp")))
 	listenAddr := fmt.Sprintf("%s:%d", ctx.Server.IP, ctx.Server.Port)
 	err = http.ListenAndServe(listenAddr, nil)
 	if err != nil {
@@ -263,7 +264,7 @@ func authenticate(pass handler, requirePerm int64) handler {
 			return
 
 		}
-		inv,err := InvestigatorBySecretkey(r.Header.Get("secretkey"))
+		inv, err = ctx.DB.InvestigatorBySecretkey(r.Header.Get("secretkey"))
 		if err != nil {
 			inv.Name = "authfailed"
 			inv.ID = -1
@@ -273,24 +274,6 @@ func authenticate(pass handler, requirePerm int64) handler {
 			return
 		}	
 
-		/*if r.Header.Get("X-PGPAUTHORIZATION") == "" {
-			inv.Name = "authmissing"
-			inv.ID = -1
-			resource := cljs.New(fmt.Sprintf("%s%s", ctx.Server.Host, r.URL.String()))
-			resource.SetError(cljs.Error{Code: fmt.Sprintf("%.0f", opid), Message: "X-PGPAUTHORIZATION header not found"})
-			respond(http.StatusUnauthorized, resource, w, r)
-			return
-		}
-		inv, err = verifySignedToken(r.Header.Get("X-PGPAUTHORIZATION"))
-		if err != nil {
-			inv.Name = "authfailed"
-			inv.ID = -1
-			resource := cljs.New(fmt.Sprintf("%s%s", ctx.Server.Host, r.URL.String()))
-			resource.SetError(cljs.Error{Code: fmt.Sprintf("%.0f", opid), Message: fmt.Sprintf("Authorization verification failed with error '%v'", err)})
-			respond(http.StatusUnauthorized, resource, w, r)
-			return
-		}
-		*/
 		// As a final phase, validate the investigator has permission to access
 		// the endpoint
 		if !inv.CheckPermission(requirePerm) {
