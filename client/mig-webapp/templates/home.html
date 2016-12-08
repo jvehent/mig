@@ -8,13 +8,22 @@
 
         </div>
     </div>
-    <div flex="30" layout="column">
+    <div flex="25" layout="column">
         <span flex></span>
         <img style="width:100%; height:auto;" src="./img/mig_logo.png" alt="mig logo">
         <span flex></span>
     </div>
-    <div flex="20">
+    <div flex="25" layout="column">
 
+        <md-button href="http://mig.mozilla.org/doc.html" class="" aria-label="documentation">
+            Documentation
+            <md-icon md-svg-icon="./img/icons/ic_help_outline_black_24px.svg"></md-icon>
+        </md-button>
+
+        <md-button href="http://list.mig.ninja/listinfo/list" class="" aria-label="maling list">
+            Mailing list
+            <md-icon md-svg-icon="./img/icons/ic_mail_outline_black_24px.svg"></md-icon>
+        </md-button>
     </div>
 </section>
 
@@ -25,7 +34,7 @@
             <md-icon md-svg-icon="./img/icons/ic_menu_white_24px.svg"></md-icon>
         </md-button>
         <span flex></span>
-        <md-button class="md-raised" aria-label="toolbar button1">
+        <md-button class="md-raised" aria-label="toolbar button1" ng-click="createOrder($event)">
             Actions
         </md-button>
         <md-button class="md-raised" aria-label="toolbar button2">
@@ -116,145 +125,152 @@
                 </form>
             </md-content>
         </md-sidenav>
-        <div flex layout-padding>
-            <md-content>
-                <md-toolbar id="setToolbar" ng-click="showDashboard=!showDashboard">
-                    <div class="md-toolbar-tools">
-                        <h2><span>Dashboard</span></h2>
-                        <span flex></span>
-                        <md-icon md-svg-src="./img/icons/ic_keyboard_arrow_down_white_24px.svg" ng-class="{'rotate':showDashboard,'rotate_disable':!showDashboard}"></md-icon>
-                    </div>
-                </md-toolbar>
-                <div class="frame md-whiteframe-glow-z1" ng-class="{'openDashboard':showDashboard,'closeDashboard':!showDashboard}" ng-if="showDashboard" layout-padding>
-                    <!--TODO: use API dashboard here-->
-                    <!-- {{dashboard}} -->
-                    <div layout="column">
-                        <div flex layout="row">
-                            <div flex>
-                                <h3>Agents and Endpoints summary:</h3>
+        <div flex layout-padding layout="column">
+            <!--            <md-content>-->
+            <md-toolbar id="setToolbar" ng-click="showDashboard=!showDashboard">
+                <div class="md-toolbar-tools">
+                    <h2><span>Dashboard</span></h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+            <!--            <md-content flex layout="row">-->
+            <div class="frame md-whiteframe-glow-z1 openDashboard" layout-padding flex layout="column">
+                <!--<div flex> //TODO: use tiles
+                    <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+                        <md-grid-tile class="green" md-colspan="2">
+                            <md-grid-tile-footer>
+                                <h3>#2: (1r x 1c)</h3>
+                            </md-grid-tile-footer>
+                        </md-grid-tile>
+                        <md-grid-tile class="yellow" md-colspan="2">
+                            <md-grid-tile-footer>
+                                <h3>#3: (1r x 1c)</h3>
+                            </md-grid-tile-footer>
+                        </md-grid-tile>
+                        <md-grid-tile class="yellow" md-colspan="2">
+                            <md-grid-tile-footer>
+                                <h3>#3: (1r x 1c)</h3>
+                            </md-grid-tile-footer>
+                        </md-grid-tile>
+                    </md-grid-list>
 
-                                <ul>
-                                    <li>
-                                        {{dashboard[0].data[0].value}} online agents on {{dashboard[0].data[2].value}} endpoints
-                                    </li>
-                                    <li>
-                                        {{dashboard[0].data[3].value}} idle agents on {{dashboard[0].data[5].value}} endpoints
-                                    </li>
-                                    <li>
-                                        {{dashboard[0].data[7].value}} endpoints are running 2 or more agents
-                                    </li>
-                                    <li>
-                                        {{dashboard[0].data[6].value}} endpoints appeared over the last 7 days
-                                    </li>
-                                    <li>
-                                        {{dashboard[0].data[8].value}} endpoints disappeared over the last 7 days
-                                    </li>
-                                    <li>
-                                        {{dashboard[0].data[9].value}} endpoints have been flapping
-                                    </li>
-                                </ul>
-                            </div>
-                            <div flex>
-                                <h3>Online agents by version:</h3>
-                                <ul>
-                                    <li ng-repeat="data in dashboard[0].data[1].value">
-                                        {{data.version}}: {{data.count}} agent
-                                    </li>
-                                </ul>
-                            </div>
+                </div>
+                <div flex>
+                    <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+                        <md-grid-tile class="red" md-rowspan="2" md-colspan="6" md-colspan-sm="1" md-colspan-xs="1">
+                            <md-grid-tile-footer>
+                                <h3>#5: (2r x 2c)</h3>
+                            </md-grid-tile-footer>
+                        </md-grid-tile>
+                    </md-grid-list>
+                </div>-->
+
+                <div layout="column">
+                    <div flex layout="row">
+                        <div flex>
+                            <h3>Agents and Endpoints summary:</h3>
+
+                            <ul>
+                                <li>
+                                    {{dashboard[0].data[0].value}} online agents on {{dashboard[0].data[2].value}} endpoints
+                                </li>
+                                <li>
+                                    {{dashboard[0].data[3].value}} idle agents on {{dashboard[0].data[5].value}} endpoints
+                                </li>
+                                <li>
+                                    {{dashboard[0].data[7].value}} endpoints are running 2 or more agents
+                                </li>
+                                <li>
+                                    {{dashboard[0].data[6].value}} endpoints appeared over the last 7 days
+                                </li>
+                                <li>
+                                    {{dashboard[0].data[8].value}} endpoints disappeared over the last 7 days
+                                </li>
+                                <li>
+                                    {{dashboard[0].data[9].value}} endpoints have been flapping
+                                </li>
+                            </ul>
                         </div>
                         <div flex>
-                            <h3>Idle agents by version: </h3> {{dashboard[0].data[4].value}}
-                            <h3>Latest Actions</h3>
-                            <div layout="row">
-                                <div flex layout="column">
-                                    <h3>ID</h3>
-                                    <ul style="list-style: none;">
-                                        <li ng-repeat="data in dashboard[1].data">
-                                            {{data.value.id}}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div flex layout="column">
-                                    <h3>Name</h3>
-                                    <ul style="list-style: none;">
-                                        <li ng-repeat="data in dashboard[1].data">
-                                            {{data.value.name}}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div flex layout="column">
-                                    <h3>Sent</h3>
-                                    <ul style="list-style: none;">
-                                        <li ng-repeat="data in dashboard[1].data">
-                                            {{data.value.counters.sent}}
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <div flex layout="column">
-                                    <h3>Date</h3>
-                                    <ul style="list-style: none;">
-                                        <li ng-repeat="data in dashboard[1].data">
-                                            {{data.value.starttime}}
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <div flex layout="column">
-                                    <h3>Investigators</h3>
-                                    <ul style="list-style: none;">
-                                        <li ng-repeat="data in dashboard[1].data">
-                                            <span ng-repeat="inv in data.value.investigators">{{inv.name}} </span>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
+                            <h3>Online agents by version:</h3>
+                            <ul>
+                                <li ng-repeat="data in dashboard[0].data[1].value">
+                                    {{data.version}}: {{data.count}} agent
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                    <div flex>
+                        <h3>Idle agents by version: </h3>
+                        <ul>
+                            <li ng-if="dashboard[0].data[4].value ">{{dashboard[0].data[4].value}}</li>
+                            <p ng-if="!dashboard[0].data[4].value ">none</p>
+                        </ul>
+                        <h3>Latest Actions:</h3>
+                        <table flex style="width:100% ">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Sent</th>
+                                <th>Date</th>
+                                <th>Investigators</th>
+                            </tr>
+                            <tr ng-repeat="data in dashboard " ng-if="!$first ">
+                                <td>
+                                    <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="getActionInfo(data.data[0].value.id) " target="_blank ">{{data.data[0].value.id}}</md-button>
+                                </td>
+                                <td>{{data.data[0].value.name}}</td>
+                                <td ng-if="data.data[0].value.counters.sent">{{data.data[0].value.counters.sent}}</td>
+                                <td ng-if="!data.data[0].value.counters.sent">0</td>
+                                <td><pre>{{data.data[0].value.starttime}}</pre></td>
+                                <td> <span ng-repeat="inv in data.data[0].value.investigators ">{{inv.name}} </span></td>
+                            </tr>
+                        </table>
+
+                    </div>
                 </div>
+            </div>
+            <!--            </md-content>-->
+            <br>
 
-
-                <md-whiteframe style="margin:10px; padding-left:10px; background-color: #FAFAFA " class="md-whiteframe-5dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout="row" ng-if="file">
-                    <div flex layout="column">
+            <!-- <md-whiteframe flex style="margin:10px; padding-left:10px; background-color: #FAFAFA " class="md-whiteframe-5dp " layout="row " ng-if="file ">
+                    <div flex layout="column ">
                         <h3>INPUTS</h3>
                         <div>
                             <md-input-container>
                                 <label>Path</label>
-                                <input ng-model="path">
+                                <input ng-model="path ">
                             </md-input-container>
                         </div>
                         <div>
                             <md-input-container>
                                 <label>Name</label>
-                                <input ng-model="name">
+                                <input ng-model="name ">
                             </md-input-container>
                         </div>
                         <div>
                             Size:
                             <md-input-container>
-                                <md-select ng-model="sym">
-                                    <md-option value="less">
+                                <md-select ng-model="sym ">
+                                    <md-option value="less ">
                                         less than
                                     </md-option>
-                                    <md-option value="eq">
+                                    <md-option value="eq ">
                                         equal to
                                     </md-option>
-                                    <md-option value="gr">
+                                    <md-option value="gr ">
                                         greater than
                                     </md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
                     </div>
-                    <!--            <md-divider style="transform: rotate(90deg);"></md-divider>-->
                     <div flex>
                         <h3>OUTPUT</h3>
 
                     </div>
-                </md-whiteframe>
-            </md-content>
+                </md-whiteframe>-->
+            <!--            </md-content>-->
         </div>
     </md-content>
     <!--    </div>-->
@@ -262,54 +278,54 @@
 
 
 
-<!--<div id="LatestActions">
-    <button ng-click="getHeartbeat()">Get Heartbeat</button>
+<!--<div id="LatestActions ">
+    <button ng-click="getHeartbeat() ">Get Heartbeat</button>
     {{heartbeat}}
 
 </div>-->
 <!-------------------------------------------------templates--------------------------------------------->
-<script type="text/ng-template" id="action.tmpl.html">
-    <md-dialog aria-label="Orders" ng-cloak>
+<script type="text/ng-template " id="action.tmpl.html ">
+    <md-dialog aria-label="Orders " ng-cloak>
         <form>
             <md-toolbar>
-                <div class="md-toolbar-tools">
+                <div class="md-toolbar-tools ">
                     <h2>Orders</h2>
                     <span flex></span>
-                    <md-button class="md-icon-button" ng-click="cancel()">
-                        <md-icon md-svg-src="./styles/img/icons/ic_close_white_24px.svg" aria-label="Close dialog"></md-icon>
+                    <md-button class="md-icon-button " ng-click="cancel() ">
+                        <md-icon md-svg-src=".img/icons/ic_close_white_24px.svg " aria-label="Close dialog "></md-icon>
                     </md-button>
                 </div>
             </md-toolbar>
 
             <md-dialog-content>
-                <div class="md-dialog-content" layout-align="center center" layout="column">
+                <div class="md-dialog-content " layout-align="center center " layout="column ">
                     <h2>The following orders are available under action</h2>
-                    <ul style="list-style: none;">
+                    <ul style="list-style: none; ">
                         <li>
-                            <md-button class="md-primary" ng-click="action($event)">add operation</md-button>
+                            <md-button class="md-primary " ng-click="action($event) ">add operation</md-button>
                         </li>
                         <li>
-                            <md-button class="md-primary">compress</md-button>
+                            <md-button class="md-primary ">compress</md-button>
                         </li>
                         <li>
-                            <md-button class="md-primary">listagents</md-button>
+                            <md-button class="md-primary ">listagents</md-button>
                         </li>
                         <li>
-                            <md-button class="md-primary">deloperation</md-button>
+                            <md-button class="md-primary ">deloperation</md-button>
                         </li>
                         <li>
-                            <md-button class="md-primary">details</md-button>
+                            <md-button class="md-primary ">details</md-button>
                         </li>
                     </ul>
                 </div>
             </md-dialog-content>
 
-            <md-dialog-actions layout="row">
+            <md-dialog-actions layout="row ">
                 <md-button>
                     Cancel
                 </md-button>
                 <span flex></span>
-                <md-button ng-click="answer('useful')" md-autofocus>
+                <md-button ng-click="answer( 'useful') " md-autofocus>
                     Okay
                 </md-button>
             </md-dialog-actions>

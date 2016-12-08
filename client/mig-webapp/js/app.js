@@ -1,1 +1,1 @@
-var app = angular.module('mig-webapp', ['ngMaterial', 'ui.router' , 'angularCSS']);
+var app = angular.module('mig-webapp', ['ngMaterial', 'ui.router', 'angularCSS', 'ngResource','ngSanitize']);

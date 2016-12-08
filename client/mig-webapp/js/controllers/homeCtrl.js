@@ -1,11 +1,25 @@
-app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$http', '$timeout', function ($scope, $mdDialog, $mdSidenav, $state, $http, $timeout) {
+app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$http', '$timeout', 'dashboardService', function ($scope, $mdDialog, $mdSidenav, $state, $http, $timeout, dashboardService) {
 
-    $scope.getHeartbeat = function () {
-        console.log("here");
-        $http.get('http://localhost:12345/api/v1/heartbeat').success(function (response) {
-            $scope.heartbeat = response;
-            console.log(response)
-        });
+    $scope.showDashboard = 0;
+    $scope.file = 0;
+
+
+
+    /*$scope.dashboard = dashboardService.query();
+//console.log($scope.dashboard);*/ //FIXME: get using ngresource
+
+    $http.get('../api/v1/dashboard').success(function (response) {
+        $scope.dashboard = response.collection.items;
+        console.log(response.collection);
+        console.log($scope.dashboard);
+    });
+
+    $scope.getActionInfo = function (id) {
+        console.log(id);
+        $state.go('getAction', {
+                actionId: id
+        })
+            //        actionService.actionId(id);
     }
 
     /*-------------------------------side nav module menu--------------------------------------------------------*/
@@ -17,17 +31,17 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
 
     /*-----------------------------------------------------------------------------------------------------------*/
 
-    $scope.showDashboard = 0;
 
     $scope.open = function () {
         $scope.file = 1;
+        $mdSidenav('left').toggle();
     }
 
     $scope.createOrder = function (ev) {
         $mdDialog.show({
                 //                controller: CreateOrder,
                 controller: CreateOrder,
-                templateUrl: 'createOrder.tmpl.html',
+                templateUrl: 'action.tmpl.html',
                 //                templateUrl: '.view/createOrder.tmpl.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
@@ -60,11 +74,6 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
                 //                $scope.status = 'You cancelled the dialog.';
             });
     }
-
-    // get dashboard
-    $http.get('/api/v1/dashboard').success(function(response){
-        $scope.dashboard = response.collection.items;        
-    });
 
     /*----------------------------------------------------------------------------*/
 

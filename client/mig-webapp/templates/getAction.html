@@ -1,0 +1,203 @@
+<md-content ng-cloak>
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Reader Mode">
+            <md-content class="md-padding">
+                <h1 class="md-display-2">Reader Mode</h1>
+                <div layout="column">
+                    <div flex>
+                    <!-- Reload Action Button. Give it a reload symbol -->
+                    <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="getActionInfo()" target="_blank ">Reload</md-button>
+
+                    <!-- Action Summary -->
+                        <h3>
+                            Action:
+                        </h3>
+                        <pre> {{actionDetails.data[0].value.name}}</pre>
+                    </div>
+                    <div flex>
+                        Launched by: <strong><p><span ng-repeat="inv in actionDetails.data[0].value.investigators">'{{inv.name}}'</span> </p></strong>
+                        <br> Launched on: <pre>'{{actionDetails.data[0].value.starttime}}'</pre>
+
+                    </div>
+                    <div flex>
+                        <h3>Status:</h3>
+                        <p>{{actionDetails.data[0].value.status}}</p>
+                    </div>
+
+                    <div flex>
+                        <h4>
+                            sent: {{actionDetails.data[0].value.counters.sent}}
+                        </h4>
+                        <h4>
+                            done: {{actionDetails.data[0].value.counters.done}}
+                        </h4>
+                        <h4>
+                            succeeded: {{actionDetails.data[0].value.counters.success}}
+                        </h4>
+                    </div>
+                    <!-- make a button to launch action using template here -->
+                        <!-- make it a card. Command -->
+                    <div flex>
+                        <h4> Click on any command id in action details to see the command details</h4>
+                        <p>Command </p> <input type="number" ng-mode="commandId"> 
+                        <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="getCommandInfo(data.data[0].value.id) " target="_blank ">Get Command Details</md-button>
+                    </div>
+                        <!-- make it a card. Details -->
+                    <div flex>
+                        <h3>Details</h3>
+                        <b>ID :</b> {{actionDetails.data[0].value.id}}
+                        <b>Name :</b> {{actionDetails.data[0].value.name}}
+                        <b>Target :</b> {{actionDetails.data[0].value.target}}
+                        <b>Description :</b> author {{actionDetails.data[0].value.description.author}} &lt; {{actionDetails.data[0].value.email}} &gt;; revision {{actionDetails.data[0].value.description.revision}} ; url {{actionDetails.data[0].value.description.url}}; 
+                        <b>Threat :</b> type {{actionDetails.data[0].value.threat.type}}; level {{actionDetails.data[0].value.threat.level}}; family {{actionDetails.data[0].value.threat.family}}; reference {{actionDetails.data[0].value.threat.ref}}
+                        <b>Status :</b> {{actionDetails.data[0].value.status}}
+                        <b>Times :</b> valid from {{actionDetails.data[0].value.validfrom}} until {{actionDetails.data[0].value.expireafter}} started {{actionDetails.data[0].value.starttime}}; last updated {{actionDetails.data[0].value.lastupdatetime}}; finished {{actionDetails.data[0].value.finishtime}} duration: {{actionDetails.data[0].value.lastupdatetime - actionDetails.data[0].value.starttime}}
+                        
+                    </div>
+                        <!-- Action Counters -->
+                        <!-- make it a card. Print counters -->
+                    <div flex>
+                        <h3>Counters</h3>
+                        <span ng-if="actionDetails.data[0].value.counters.sent">{{actionDetails.data[0].value.counters.sent}} sent</span>
+                        <span ng-if="actionDetails.data[0].value.counters.done">{{actionDetails.data[0].value.counters.sent}} done</span>
+                        <span ng-if="actionDetails.data[0].value.counters.inflight">{{actionDetails.data[0].value.counters.sent}} inflight</span>
+                        <span ng-if="actionDetails.data[0].value.counters.succedded">{{actionDetails.data[0].value.counters.sent}} succedded</span>
+                        <span ng-if="actionDetails.data[0].value.counters.cancelled">{{actionDetails.data[0].value.counters.sent}} cancelled</span>
+                        <span ng-if="actionDetails.data[0].value.counters.expired">{{actionDetails.data[0].value.counters.sent}} expired</span>
+                        <span ng-if="actionDetails.data[0].value.counters.failed">{{actionDetails.data[0].value.counters.sent}} failed</span>
+                        <span ng-if="actionDetails.data[0].value.counters.timeout">{{actionDetails.data[0].value.counters.sent}} timeout</span>
+                    </div>
+                        <!-- make it a card. Investigators -->
+                    <div flex>
+                        <h3>Investigators</h3>
+                        <p ng-repeat="inv in actionDetails.data[0].value.investigators"> <b>{{inv.name}}</b> : Key ID - {{inv.pgpfingerprint}}</p>
+                    </div>
+                        <!-- make it a card. JSON, TODO: prettify JSON -->
+                    <div flex>
+                        <h3>JSON</h3>
+                        <p> {{actionDetails.data[0].value}} </p>
+                    </div>
+                        <!-- make it a card. List Commands -->
+                    <div flex>
+                        <h3>List Of Commands</h3>
+                            <!-- make it a card. All -->
+                            <!--TODO: Add search filtering -->
+                        <div flex>
+                            <!-- TODO: Show this onlick on collapsed card instead of the button, & formatting to be done as per the console -->
+                            <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="searchCommands(1)" target="_blank ">Show all</md-button>
+
+                            <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="searchCommands(2)" target="_blank ">Show Found</md-button>
+
+                            <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="searchCommands(3)" target="_blank ">Show Not Found</md-button>
+                            <div flex layout='row'>
+                                <div flex layout='column'>
+                                    <h3>Command ID
+                                    <p ng-repeat="cmd in commandsList">
+                                        <span ng-if="cmd.data[0].name =='command'">{{cmd.data[0].value.id}}</span>
+                                    </p>
+                                </div>
+                                <div flex layout='column'>
+                                    <h3>Agent Name &amp; ID </h3>
+                                    <p ng-repeat="cmd in commandsList">
+                                        <span ng-if="cmd.data[0].name =='command'">{{cmd.data[0].value.agent.name}} [{{cmd.data[0].value.agent.id}}]</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <!-- TODO: Results  -->
+                    <div flex>
+                        
+                    </div>
+
+                        <!-- make it a card. TimeStamps -->
+                    <div flex>
+                        <h3>Timestamps</h3>
+                        <p><b>Valid From</b> {{actionDetails.data[0].value.validfrom}} <b>until</b> {{actionDetails.data[0].value.expireafter}}</p>
+                        <p><b>Started On</b> {{actionDetails.data[0].value.starttime}}</p>
+                        <p><b>Last Updated</b> {{actionDetails.data[0].value.lastupdatetime}}</p>
+                        <p><b>Finished On</b> {{actionDetails.data[0].value.finishtime}}</p>
+                    </div>
+
+
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Command Mode">
+            <md-content class="md-padding">
+                <h1 class="md-display-2">Command Mode</h1>
+
+            </md-content>
+        </md-tab>
+
+        <md-tab label="Action Launcher Mode">
+            <md-content class="md-padding">
+                <p>Generate new action using current action as a template:</p>
+                <br>
+                <md-input-container>
+                    <label>Set Name</label>
+                    <input required ng-model="name">
+                </md-input-container>
+                <br>
+                <div layout="row">
+                    <p> Set Counters: </p>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>Done</label>
+                            <input name="done" ng-model="done" required ng-pattern="" md-maxlength="">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Inflight</label>
+                            <input name="inflight" ng-model="inflight" required ng-pattern="" md-maxlength="">
+                        </md-input-container>
+                    </div>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>Sent</label>
+                            <input name="sent" ng-model="sent" required ng-pattern="" md-maxlength="">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Success</label>
+                            <input name="success" ng-model="success" required ng-pattern="" md-maxlength="">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <p> Description: </p>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>Author</label>
+                            <input required ng-model="author">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Email</label>
+                            <input required type="email" ng-model="Email">
+                        </md-input-container>
+                    </div>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>revision</label>
+                            <input name="rev" ng-model="revision" required ng-pattern="" md-maxlength="">
+                        </md-input-container>
+                    </div>
+                </div>
+                <md-input-container>
+                    <label>Expire After</label>
+                    <input name="ea" ng-model="expreAfter" required ng-pattern="" md-maxlength="">
+                </md-input-container>
+                <br>
+                <md-input-container>
+                    <label>Finish Time</label>
+                    <input name="ea" ng-model="expreAfter" required ng-pattern="" md-maxlength="">
+                </md-input-container>
+                <br>
+                <div layout="row">
+                    <p>Id: </p> <pre><!--{{id}}--> blahblahblah</pre>
+                </div>
+                <!--TODO: give functionality of adding new operations and deleting operations-->
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>
