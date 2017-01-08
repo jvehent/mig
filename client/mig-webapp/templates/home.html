@@ -40,7 +40,7 @@
         <md-button class="md-raised" aria-label="toolbar button2">
             Investigator
         </md-button>
-        <md-button class="md-raised" aria-label="toolbar button3">
+        <md-button class="md-raised" aria-label="toolbar button3" ng-click="loader($event)">
             Loader
         </md-button>
         <md-button class="md-raised" aria-label="toolbar button4">
@@ -317,6 +317,40 @@
                             <md-button class="md-primary ">details</md-button>
                         </li>
                     </ul>
+                </div>
+            </md-dialog-content>
+
+            <md-dialog-actions layout="row ">
+                <md-button>
+                    Cancel
+                </md-button>
+                <span flex></span>
+                <md-button ng-click="answer( 'useful') " md-autofocus>
+                    Okay
+                </md-button>
+            </md-dialog-actions>
+        </form>
+    </md-dialog>
+</script>
+<script type="text/ng-template " id="loader.tmpl.html ">
+    <md-dialog aria-label="Orders " ng-cloak>
+        <form>
+            <md-toolbar>
+                <div class="md-toolbar-tools ">
+                    <h2>Loader</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button " ng-click="cancel() ">
+                        <md-icon md-svg-src=".img/icons/ic_close_white_24px.svg " aria-label="Close dialog "></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <div class="md-dialog-content " layout-align="center center " layout="column ">
+                    <md-input-container>
+                        <label>Name</label>
+                        <input name="loader_name" ng-model=loaderName " required ng-pattern=" " md-maxlength=" ">
+                </md-input-container>
                 </div>
             </md-dialog-content>
 

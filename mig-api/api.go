@@ -128,7 +128,7 @@ func main() {
 
 	// all set, start the http handler
 	http.Handle("/", context.ClearHandler(r))
-	
+
 	//web client
 	http.Handle("/mig-webapp/", http.FileServer(http.Dir("./client/")))
 	http.Handle("/css/", http.FileServer(http.Dir("./client/mig-webapp/")))
@@ -136,7 +136,7 @@ func main() {
 	http.Handle("/templates/", http.FileServer(http.Dir("./client/mig-webapp")))
 	http.Handle("/fonts/", http.FileServer(http.Dir("./client/mig-webapp")))
 	http.Handle("/img/", http.FileServer(http.Dir("./client/mig-webapp")))
-	
+
 	listenAddr := fmt.Sprintf("%s:%d", ctx.Server.IP, ctx.Server.Port)
 	err = http.ListenAndServe(listenAddr, nil)
 	if err != nil {
@@ -275,7 +275,7 @@ func authenticate(pass handler, requirePerm int64) handler {
 			resource.SetError(cljs.Error{Code: fmt.Sprintf("%.0f", opid), Message: fmt.Sprintf("Authorization verification failed with error '%v'", err)})
 			respond(http.StatusUnauthorized, resource, w, r)
 			return
-		}	
+		}
 
 		// As a final phase, validate the investigator has permission to access
 		// the endpoint
@@ -435,7 +435,7 @@ func getHeartbeat(respWriter http.ResponseWriter, request *http.Request) {
 		Data: []cljs.Data{
 			{
 				Name:  "heartbeat",
-				Value: "gatorz say hi",
+				Value: "gatorz say hi and jayant too",
 			},
 		}})
 	if err != nil {

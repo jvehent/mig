@@ -18,7 +18,7 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
         console.log(id);
         $state.go('getAction', {
                 actionId: id
-        })
+            })
             //        actionService.actionId(id);
     }
 
@@ -59,10 +59,28 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
 
 
     $scope.action = function (ev) {
+            $mdDialog.show({
+                    //                controller: CreateOrder,
+                    controller: CreateOrder,
+                    templateUrl: 'action.tmpl.html',
+                    //                templateUrl: '.view/createOrder.tmpl.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true
+                })
+                .then(function (answer) {
+                    //                $scope.status = 'You said the information was "' + answer + '".';
+                }, function () {
+                    //                $scope.status = 'You cancelled the dialog.';
+                });
+        }
+        /*---------------------------------------------------------------------------------------------------*/
+
+    $scope.loader = function (ev) {
         $mdDialog.show({
                 //                controller: CreateOrder,
                 controller: CreateOrder,
-                templateUrl: 'action.tmpl.html',
+                templateUrl: 'loader.tmpl.html',
                 //                templateUrl: '.view/createOrder.tmpl.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
