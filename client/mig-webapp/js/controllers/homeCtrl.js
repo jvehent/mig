@@ -29,13 +29,13 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
         $mdSidenav('left').toggle();
     }
 
-    /*-----------------------------------------------------------------------------------------------------------*/
-
-
     $scope.open = function () {
-        $scope.file = 1;
-        $mdSidenav('left').toggle();
-    }
+            $scope.file = 1;
+            $mdSidenav('left').toggle();
+        }
+        /*-----------------------------------------------------------------------------------------------------------*/
+
+
 
     $scope.createOrder = function (ev) {
         $mdDialog.show({
@@ -61,7 +61,7 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
     $scope.action = function (ev) {
             $mdDialog.show({
                     //                controller: CreateOrder,
-                    controller: CreateOrder,
+                    controller: actionTemplCtrl,
                     templateUrl: 'action.tmpl.html',
                     //                templateUrl: '.view/createOrder.tmpl.html',
                     parent: angular.element(document.body),
@@ -74,12 +74,14 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
                     //                $scope.status = 'You cancelled the dialog.';
                 });
         }
-        /*---------------------------------------------------------------------------------------------------*/
+        /*--------------------------------------------create loader entry-------------------------------------------------------*/
+
+
 
     $scope.loader = function (ev) {
         $mdDialog.show({
                 //                controller: CreateOrder,
-                controller: CreateOrder,
+                controller: createLoader,
                 templateUrl: 'loader.tmpl.html',
                 //                templateUrl: '.view/createOrder.tmpl.html',
                 parent: angular.element(document.body),
@@ -87,103 +89,70 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
                 clickOutsideToClose: true
             })
             .then(function (answer) {
-                //                $scope.status = 'You said the information was "' + answer + '".';
+                //                $scope.status = 'You said the information was "' + answer + '".';                 
             }, function () {
                 //                $scope.status = 'You cancelled the dialog.';
             });
     }
 
+
+
+
+
+
     /*----------------------------------------------------------------------------*/
 
-    /*
-    
-    $scope.modules = [
-    'File',
-    'Memory',
-    'NetStat',
-    'Package',
-    'Scribe',
-    'Ping',
-    'TimeDrift'
-  ];
-    var selected = {
-        selectModule: 'Donut'
-    };
-
-    
-
-        $scope.showMenu = function (ev) {
-              var position = $mdPanel.newPanelPosition()
-            .relativeTo('.demo-menu-open-button')
-            .addPanelPosition($mdPanel.xPosition.ALIGN_START, $mdPanel.yPosition.BELOW);
-            var config = {
-                attachTo: angular.element(document.body),
-                controller: PanelMenuCtrl,
-                //            controllerAs: 'ctrl',
-                template: '<div class="demo-menu-example" ' +
-                    '     aria-label="modules" ' +
-                    '     role="listbox">' +
-                    '  <div class="demo-menu-item" ' +
-                    '       ng-class="{selected : module == selectModule}" ' +
-                    '       aria-selected="{{module == selectModule}}" ' +
-                    '       tabindex="-1" ' +
-                    '       role="option" ' +
-                    '       ng-repeat="module in modules" ' +
-                    '       ng-click="selectModuleFunc(module)">' +
-                    '    {{ module }} ' +
-                    '  </div>' +
-                    '</div>',
-                panelClass: 'demo-menu-example',
-                //            position: position,
-                locals: {
-                    'selected': selected,
-                    'modules': $scope.modules
-                },
-                openFrom: ev,
-                clickOutsideToClose: true,
-                escapeToClose: true,
-                focusOnOpen: false,
-                zIndex: 2
-            };
-            $mdPanel.open(config);
-        };
 
 
-    */
 
 
 }])
 
-
-/*function PanelMenuCtrl(mdPanelRef, $timeout) {
-     $scope.selectModule = selected.selectModule;
-     $timeout(function () {
-         var selected = document.querySelector('.demo-menu-item.selected');
-         if (selected) {
-             angular.element(selected).focus();
-         } else {
-             angular.element(document.querySelectorAll('.demo-menu-item')[0]).focus();
-         }
-     });
-
-
-     $scope.selectModuleFunc = function (module) {
-         console.log(module);
-         selected.selectModule = module;
-         mdPanelRef && mdPanelRef.close().then(function () {
-             angular.element(document.querySelector('.demo-menu-open-button')).focus();
-         });
-     };
- }
-
-*/
 
 /*-----------------------------------------------------------------*/
 
 
 
 
-var CreateOrder = function ($scope, $mdDialog) {
+var createLoader = function ($scope, $mdDialog) {
+
+    const LoaderPrefixLength = 8 // Prefix length
+    const LoaderKeyLength = 32 // Length excluding prefix
+        //var $scope.prefix;
+        //var $scope.key;
+
+    var randomString = function (length) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+    }
+
+    $scope.prefix = Math.random().toString(36).substring(2, LoaderPrefixLength + 2);
+    $scope.key = randomString(LoaderKeyLength);
+    $scope.generateLoader = function () {
+        console.log($scope.loaderName);
+        console.log($scope.prefix);
+        console.log($scope.key);
+        /*TODO: structure the loader fields and then use post API here*/
+        $mdDialog.hide("blah");
+    }
+
+
+
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+}
+
+var actionTemplCtrl = function ($scope, $mdDialog) {
+
+
     $scope.hide = function () {
         $mdDialog.hide();
     };
@@ -193,9 +162,5 @@ var CreateOrder = function ($scope, $mdDialog) {
     $scope.answer = function (answer) {
         $mdDialog.hide(answer);
     };
-
-
-
-
 
 }

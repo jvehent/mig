@@ -337,7 +337,7 @@
         <form>
             <md-toolbar>
                 <div class="md-toolbar-tools ">
-                    <h2>Loader</h2>
+                    <h2>Create new Loader</h2>
                     <span flex></span>
                     <md-button class="md-icon-button " ng-click="cancel() ">
                         <md-icon md-svg-src=".img/icons/ic_close_white_24px.svg " aria-label="Close dialog "></md-icon>
@@ -345,22 +345,26 @@
                 </div>
             </md-toolbar>
 
-            <md-dialog-content>
-                <div class="md-dialog-content " layout-align="center center " layout="column ">
+            <md-dialog-content layout-padding>
+                <div class="md-dialog-content " layout="column ">
+                    <p>Provide name of the new entry:</p>
                     <md-input-container>
                         <label>Name</label>
-                        <input name="loader_name" ng-model=loaderName " required ng-pattern=" " md-maxlength=" ">
-                </md-input-container>
+                        <input name="loader_name" ng-model="loaderName " required ng-pattern=" " ng-minlength="3">
+                        <small>(input name must be greater than 3 char long)</small>
+                    </md-input-container>
                 </div>
+                <h3>New Key is: </h3>
+                <p> {{prefix}}{{key}}</p>
             </md-dialog-content>
 
             <md-dialog-actions layout="row ">
-                <md-button>
+                <md-button ng-click="cancel()">
                     Cancel
                 </md-button>
                 <span flex></span>
-                <md-button ng-click="answer( 'useful') " md-autofocus>
-                    Okay
+                <md-button ng-click="generateLoader()" md-autofocus>
+                    Create
                 </md-button>
             </md-dialog-actions>
         </form>
