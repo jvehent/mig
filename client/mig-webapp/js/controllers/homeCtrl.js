@@ -40,7 +40,7 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
     $scope.createOrder = function (ev) {
         $mdDialog.show({
                 //                controller: CreateOrder,
-                controller: CreateOrder,
+                controller: actionTemplCtrl,
                 templateUrl: 'action.tmpl.html',
                 //                templateUrl: '.view/createOrder.tmpl.html',
                 parent: angular.element(document.body),
@@ -53,7 +53,6 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
                 //                $scope.status = 'You cancelled the dialog.';
             });
     }
-
 
 
 
@@ -114,7 +113,7 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
 
 
 
-var createLoader = function ($scope, $mdDialog) {
+var createLoader = function ($scope, $mdDialog, $http) {
 
     const LoaderPrefixLength = 8 // Prefix length
     const LoaderKeyLength = 32 // Length excluding prefix
@@ -136,7 +135,63 @@ var createLoader = function ($scope, $mdDialog) {
         console.log($scope.loaderName);
         console.log($scope.prefix);
         console.log($scope.key);
+        var prefixKey = $scope.prefix.concat($scope.key);
+        console.log(prefixKey);
+        var newle = {
+            name: $scope.loaderName,
+            prefix: $scope.prefix,
+            key: $scope.key,
+            expectenv: ""
+        };
+        /*data["name"] = $scope.loaderName;
+data["prefix"] = $scope.prefix;
+data["key"] = $scope.key;
+data["expectenv"] = "";*/
+
+        console.log(newle);
         /*TODO: structure the loader fields and then use post API here*/
+        var newLoaderEntry = JSON.stringify(newle);
+        console.log(newLoaderEntry);
+
+        var data = {};
+        //data["loader"] = String(newLoaderEntry);
+        data["loader"] = newLoaderEntry;
+
+        /*console.log(data);
+        $http({
+            method: 'POST',
+            url: '../api/v1/loader/new/',
+            data: JSON.stringify(newLoaderEntry)
+        }).success(function (response) {
+
+            console.log(response);
+        });*/
+
+        /*FIXME: body of POST:
+    {"name":"jaant","prefix":"cddr2wo8","key":"3LSWugv3xiNm9RPdUArr2tgz5GLU19aE","expectenv":""}
+    */
+
+        $http({
+            method: 'POST',
+            url: '../api/v1/loader/new/',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj)
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data: {
+                loader: newLoaderEntry
+            }
+        }).success(function (response) {
+            console.log(response);
+        }).error(function (err) {
+            console.log(err);
+        });
+
         $mdDialog.hide("blah");
     }
 
