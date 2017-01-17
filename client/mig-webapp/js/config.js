@@ -8,12 +8,14 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('home', {
             url: '/',
             templateUrl: './templates/home.html',
-            controller: 'homeCtrl'
+            controller: 'homeCtrl',
+            css: './css/home.css'
         })
         .state('getAction', {
             url: '/action/:actionId',
             templateUrl: '/templates/getAction.html',
-            controller: 'actionCtrl'
+            controller: 'actionCtrl',
+            css: './css/getAction.css'
         });
     /*.state('actionId', {
         parent: 'home',

@@ -37,7 +37,7 @@
         <md-button class="md-raised" aria-label="toolbar button1" ng-click="createOrder($event)">
             Actions
         </md-button>
-        <md-button class="md-raised" aria-label="toolbar button2">
+        <md-button class="md-raised" aria-label="toolbar button2" ng-click="investigator($event)">
             Investigator
         </md-button>
         <md-button class="md-raised" aria-label="toolbar button3" ng-click="loader($event)">
@@ -329,6 +329,7 @@
         </form>
     </md-dialog>
 </script>
+<!--TODO: show the key only when the 201 status is received from the api ie, after success of entry-->
 <script type="text/ng-template " id="loader.tmpl.html ">
     <md-dialog aria-label="Orders " ng-cloak>
         <form>
@@ -348,8 +349,7 @@
                         <small>(input name must be greater than 3 char long)</small>
                     </md-input-container>
                 </div>
-                <h3>New Key is: </h3>
-                <p> {{prefix}}{{key}}</p>
+
             </md-dialog-content>
 
             <md-dialog-actions layout="row ">
@@ -358,6 +358,40 @@
                 </md-button>
                 <span flex></span>
                 <md-button ng-click="generateLoader()" md-autofocus>
+                    Create
+                </md-button>
+            </md-dialog-actions>
+        </form>
+    </md-dialog>
+</script>
+
+<script type="text/ng-template " id="investigator.tmpl.html ">
+    <md-dialog aria-label="Orders " ng-cloak>
+        <form>
+            <md-toolbar>
+                <div class="md-toolbar-tools ">
+                    <h2>Create new Loader</h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content layout-padding>
+                <div class="md-dialog-content " layout="column ">
+                    <p>Provide name of the new entry:</p>
+                    <md-input-container>
+                        <label>Name</label>
+                        <input name="loader_name" ng-model="loaderName " required ng-pattern=" " ng-minlength="3">
+                        <small>(input name must be greater than 3 char long)</small>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+
+            <md-dialog-actions layout="row ">
+                <md-button ng-click="cancel()">
+                    Cancel
+                </md-button>
+                <span flex></span>
+                <md-button ng-click="investigator()" md-autofocus>
                     Create
                 </md-button>
             </md-dialog-actions>

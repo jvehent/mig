@@ -15,6 +15,7 @@ app.controller('actionCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$h
             console.log("actiondetails: " + JSON.stringify(response.collection));
         });
     }
+    $scope.actionJson = JSON.stringify(response.collection.data[0].value, null, 2);
     $scope.getActionInfo();
     $scope.getCommandInfo = function (id) {
         console.log(id);

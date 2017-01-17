@@ -55,33 +55,34 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
     }
 
 
-
-
-    $scope.action = function (ev) {
-            $mdDialog.show({
-                    //                controller: CreateOrder,
-                    controller: actionTemplCtrl,
-                    templateUrl: 'action.tmpl.html',
-                    //                templateUrl: '.view/createOrder.tmpl.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true
-                })
-                .then(function (answer) {
-                    //                $scope.status = 'You said the information was "' + answer + '".';
-                }, function () {
-                    //                $scope.status = 'You cancelled the dialog.';
-                });
-        }
-        /*--------------------------------------------create loader entry-------------------------------------------------------*/
+    /*--------------------------------------------create loader entry-------------------------------------------------------*/
 
 
 
     $scope.loader = function (ev) {
         $mdDialog.show({
                 //                controller: CreateOrder,
-                controller: createLoader,
+                controller: createLoaderCtrl,
                 templateUrl: 'loader.tmpl.html',
+                //                templateUrl: '.view/createOrder.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            })
+            .then(function (answer) {
+                //                $scope.status = 'You said the information was "' + answer + '".';                 
+            }, function () {
+                //                $scope.status = 'You cancelled the dialog.';
+            });
+    }
+
+
+    /*-------------------------------------------investigator------------------------------------*/
+    $scope.investigator = function (ev) {
+        $mdDialog.show({
+                //                controller: CreateOrder,
+                controller: investigatorCtrl,
+                templateUrl: 'investigator.tmpl.html',
                 //                templateUrl: '.view/createOrder.tmpl.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
@@ -113,7 +114,7 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
 
 
 
-var createLoader = function ($scope, $mdDialog, $http) {
+var createLoaderCtrl = function ($scope, $mdDialog, $http) {
 
     const LoaderPrefixLength = 8 // Prefix length
     const LoaderKeyLength = 32 // Length excluding prefix
@@ -153,10 +154,6 @@ data["expectenv"] = "";*/
         var newLoaderEntry = JSON.stringify(newle);
         console.log(newLoaderEntry);
 
-        var data = {};
-        //data["loader"] = String(newLoaderEntry);
-        data["loader"] = newLoaderEntry;
-
         /*console.log(data);
         $http({
             method: 'POST',
@@ -188,6 +185,7 @@ data["expectenv"] = "";*/
             }
         }).success(function (response) {
             console.log(response);
+            window.prompt("new loader key is: ", prefixKey);
         }).error(function (err) {
             console.log(err);
         });
@@ -207,6 +205,20 @@ data["expectenv"] = "";*/
 
 var actionTemplCtrl = function ($scope, $mdDialog) {
 
+
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+    $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+    };
+
+}
+
+var investigatorCtrl = function ($scope, $mdDialog, $http) {
 
     $scope.hide = function () {
         $mdDialog.hide();

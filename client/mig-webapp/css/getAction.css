@@ -1,7 +1,44 @@
-#details td {
+#detailsTable td {
     padding: 5px;
 }
 
-#details tr {
+#detailsTable tr {
     padding: 5px;
+}
+
+#actionSummary {
+    background-color: #b9f6ca;
+}
+
+#actionCommand {
+    background-color: lightblue;
+}
+
+#actionJson {
+    background-color: #448aff;
+}
+
+#actionDetail {
+    background-color: #b388ff;
+}
+
+#summaryTable {
+    width: 100%;
+}
+
+#actionInvestigator {
+    background-color: #ff8a80;
+}
+
+#detailsTable {
+    width: 100%;
+}
+
+#actionCounter {
+    background-color: #ffff8d;
+}
+
+#actionButtons {
+    margin-left: 0;
+    padding-left: 0;
 }

@@ -2,15 +2,14 @@
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Reader Mode">
             <md-content class="md-padding">
-                <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="getActionInfo()" target="_blank ">Reload</md-button>
+                <md-button class="md-primary " ng-click="getActionInfo()" target="_blank ">
+                    <md-icon md-svg-icon="./img/icons/ic_refresh_black_24px.svg"></md-icon> Refresh</md-button>
                 <div layout="column">
                     <div layout-margin layout="row" layout-align="space-around">
-                        <!-- Reload Action Button. Give it a reload symbol -->
 
-                        <!-- Action Summary -->
                         <span></span>
-                        <md-whiteframe style="background-color: #b9f6ca;" class="md-whiteframe-3dp" flex-sm="40" flex-gt-sm="70" flex-gt-md="80" layout="column" layout-padding>
-                            <table flex style="width:100% ">
+                        <md-whiteframe id="actionSummary" class="md-whiteframe-3dp" flex-sm="40" flex-gt-sm="70" flex-gt-md="80" layout="column" layout-padding>
+                            <table id="summaryTable" flex>
                                 <tr>
                                     <th>Action</th>
                                     <th>Launched by</th>
@@ -40,7 +39,7 @@
                         <!-- make it a card. Command -->
                         <div flex layout="column">
                             <div flex layout-margin>
-                                <md-whiteframe style="background-color: lightblue;" class="md-whiteframe-3dp" layout="column" layout-padding>
+                                <md-whiteframe id="actionCommand" class="md-whiteframe-3dp" layout="column" layout-padding>
                                     <h4> Click on any command id in action details to see the command details</h4>
                                     <div layout="row">
                                         <!--<input type="number" ng-model="commandId">-->
@@ -48,29 +47,32 @@
                                             <!--<label>Finish Time</label>-->
                                             <input name="comm" type="number" ng-pattern="" md-maxlength="" ng-model="commandId">
                                         </md-input-container>
-                                        <md-button style="margin-left:0; padding-left:0;" class="md-primary" ng-click="getCommandInfo(data.data[0].value.id) " target="_blank " flex>Get Command Details</md-button>
+                                        <md-button id="actionButtons" class="md-primary" ng-click="getCommandInfo(data.data[0].value.id) " target="_blank " flex>Get Command Details</md-button>
                                     </div>
                                 </md-whiteframe>
                             </div>
                             <div flex layout-margin>
-                                <md-whiteframe style="background-color: #ff8a80;" class="md-whiteframe-3dp" layout="column" layout-padding>
+                                <md-whiteframe id="actionInvestigator" class="md-whiteframe-3dp" layout="column" layout-padding>
                                     <h3>Investigators</h3>
                                     <p ng-repeat="inv in actionDetails.data[0].value.investigators"> <b>{{inv.name}}</b> : Key ID - {{inv.pgpfingerprint}}</p>
                                 </md-whiteframe>
                             </div>
                             <div flex layout-margin>
-                                <md-whiteframe style="background-color: #448aff;" class="md-whiteframe-3dp" layout="column" layout-padding>
-                                    <h3>JSON</h3>
-                                    <!--TODO: ng bind here using sanitize-->
-                                    <p> {{actionDetails.data[0].value}} </p>
-                                </md-whiteframe>
+                                <md-content>
+                                    <md-whiteframe id="actionJson" class="md-whiteframe-3dp" layout="column" layout-padding>
+                                        <h3>JSON</h3>
+                                        <!--TODO: Try to wrap long values to next line-->
+                                        <pre> {{actionDetails.data[0].value| json}} </pre>
+                                        <!--                                    <pre> {{actionJson | json}} </pre>-->
+                                    </md-whiteframe>
+                                </md-content>
                             </div>
                         </div>
                         <!-- make it a card. Details -->
                         <div flex layout="column">
                             <div layout-margin>
-                                <md-whiteframe style="background-color: #b388ff;" class="md-whiteframe-3dp" layout="column" layout-padding>
-                                    <table id="details" flex style="width:100% ">
+                                <md-whiteframe id="actionDetail" class="md-whiteframe-3dp" layout="column" layout-padding>
+                                    <table id="detailsTable" flex>
                                         <tr>
                                             <th>ID</th>
                                             <td>{{actionDetails.data[0].value.id}}</td>
@@ -124,7 +126,7 @@
 
                             <div layout-margin>
 
-                                <md-whiteframe style="background-color:  #ffff8d;" class="md-whiteframe-3dp" flex-sm="40" flex-gt-sm="70" flex-gt-md="80" layout="column" layout-padding>
+                                <md-whiteframe id="actionCounter" class="md-whiteframe-3dp" flex-sm="40" flex-gt-sm="70" flex-gt-md="80" layout="column" layout-padding>
                                     <h3>Counters</h3>
                                     <table id="details" flex style="width:100% ">
                                         <tr ng-if="actionDetails.data[0].value.counters.sent">
@@ -173,11 +175,11 @@
                         <!--TODO: Add search filtering -->
                         <div flex>
                             <!-- TODO: Show this onlick on collapsed card instead of the button, & formatting to be done as per the console -->
-                            <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="searchCommands(1)" target="_blank ">Show all</md-button>
+                            <md-button id="actionButtons" class="md-primary " ng-click="searchCommands(1)" target="_blank ">Show all</md-button>
 
-                            <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="searchCommands(2)" target="_blank ">Show Found</md-button>
+                            <md-button id="actionButtons" class="md-primary " ng-click="searchCommands(2)" target="_blank ">Show Found</md-button>
 
-                            <md-button style="margin-left:0; padding-left:0;" class="md-primary " ng-click="searchCommands(3)" target="_blank ">Show Not Found</md-button>
+                            <md-button id="actionButtons" class="md-primary " ng-click="searchCommands(3)" target="_blank ">Show Not Found</md-button>
                             <div flex layout='row'>
                                 <div flex layout='column'>
                                     <h3>Command ID</h3>
