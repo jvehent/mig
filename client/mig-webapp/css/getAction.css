@@ -16,6 +16,7 @@
 
 #actionJson {
     background-color: #448aff;
+   
 }
 
 #actionDetail {
@@ -42,3 +43,17 @@
     margin-left: 0;
     padding-left: 0;
 }
+#jsonContent {
+        background-color: #448aff;
+     height: 500px;
+    overflow: hidden;
+}
+
+#jsonContent:hover {
+        background-color: #448aff;
+     height: 500px;
+    overflow: auto;
+}
+
+
+

@@ -16,6 +16,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             templateUrl: '/templates/getAction.html',
             controller: 'actionCtrl',
             css: './css/getAction.css'
+        })
+        .state('investigator', {
+            url: '/investigator/',
+            templateUrl: '/templates/investigator.html',
+            controller: 'investigatorCtrl'
+                // css: './css/investigator.css'
         });
     /*.state('actionId', {
         parent: 'home',

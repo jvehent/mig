@@ -5,17 +5,24 @@ app.controller('actionCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$h
     console.log($scope.actionId);
     $scope.count = 0;
 
-    // made a function for the ease of reloading from the same page
-    $scope.getActionInfo = function () {
-        $http.get('../api/v1/action?actionid=' + $scope.actionId).success(function (response) {
-            $scope.actionDetails = response.collection.items[0];
-            if (response.collection.items[0].data[0].name != "action") {
-                console.log("Error: API returned something that is not an action... something's wrong.")
-            }
-            console.log("actiondetails: " + JSON.stringify(response.collection));
-        });
+
+    $scope.returnToDashboard = function () {
+
+        $state.go('home');
+        //        actionService.actionId(id);
     }
-    $scope.actionJson = JSON.stringify(response.collection.data[0].value, null, 2);
+
+
+    $scope.getActionInfo = function () {
+            $http.get('../api/v1/action?actionid=' + $scope.actionId).success(function (response) {
+                $scope.actionDetails = response.collection.items[0];
+                if (response.collection.items[0].data[0].name != "action") {
+                    console.log("Error: API returned something that is not an action... something's wrong.")
+                }
+                console.log("actiondetails: " + JSON.stringify(response.collection));
+            });
+        }
+        //    $scope.actionJson = JSON.stringify(response.collection.data[0].value, null, 2);
     $scope.getActionInfo();
     $scope.getCommandInfo = function (id) {
         console.log(id);

@@ -2,6 +2,8 @@
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Reader Mode">
             <md-content class="md-padding">
+                <md-button class="md-primary " ng-click="returnToDashboard()" target="_blank ">
+                    <md-icon md-svg-icon="./img/icons/ic_arrow_back_black_24px.svg"></md-icon> Dashboard</md-button>
                 <md-button class="md-primary " ng-click="getActionInfo()" target="_blank ">
                     <md-icon md-svg-icon="./img/icons/ic_refresh_black_24px.svg"></md-icon> Refresh</md-button>
                 <div layout="column">
@@ -61,8 +63,10 @@
                                 <md-content>
                                     <md-whiteframe id="actionJson" class="md-whiteframe-3dp" layout="column" layout-padding>
                                         <h3>JSON</h3>
-                                        <!--TODO: Try to wrap long values to next line-->
-                                        <pre> {{actionDetails.data[0].value| json}} </pre>
+                                        <md-content id="jsonContent">
+                                            <!--TODO: Try to wrap long values to next line-->
+                                            <pre> {{actionDetails.data[0].value| json}} </pre>
+                                        </md-content>
                                         <!--                                    <pre> {{actionJson | json}} </pre>-->
                                     </md-whiteframe>
                                 </md-content>

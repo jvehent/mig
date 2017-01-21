@@ -22,6 +22,12 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
             //        actionService.actionId(id);
     }
 
+    $scope.showInvestigators = function () {
+        $state.go('investigator');
+    }
+
+
+
     /*-------------------------------side nav module menu--------------------------------------------------------*/
 
 
@@ -75,28 +81,6 @@ app.controller('homeCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state', '$htt
                 //                $scope.status = 'You cancelled the dialog.';
             });
     }
-
-
-    /*-------------------------------------------investigator------------------------------------*/
-    $scope.investigator = function (ev) {
-        $mdDialog.show({
-                //                controller: CreateOrder,
-                controller: investigatorCtrl,
-                templateUrl: 'investigator.tmpl.html',
-                //                templateUrl: '.view/createOrder.tmpl.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            })
-            .then(function (answer) {
-                //                $scope.status = 'You said the information was "' + answer + '".';                 
-            }, function () {
-                //                $scope.status = 'You cancelled the dialog.';
-            });
-    }
-
-
-
 
 
 

@@ -1,0 +1,122 @@
+<md-content ng-cloak>
+
+    <md-toolbar class="md-hue-4" ng-cloak>
+        <div class="md-toolbar-tools">
+            <!--FIX ME: not toggling-->
+            <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="modules label">
+                <md-icon md-svg-icon="./img/icons/ic_menu_white_24px.svg"></md-icon>
+            </md-button>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <div layout="column" flex>
+
+        <md-content layout="row" flex>
+            <!--            <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">-->
+            <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4">
+
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools">Investigators</h1>
+                </md-toolbar>
+                <md-content layout-padding>
+                    <md-input-container layout="column">
+                        <md-button flex id="investigators" ng-click="createInvestigator($event)" layout="row">
+                            <div flex>
+                                +Add new Investigator
+                            </div>
+                        </md-button>
+                        <md-button flex id="investigators" ng-click="showInvestigator($index)" layout="row" ng-repeat="invest in allInvestigators">
+                            <!--FIXME: run loop 1 less-->
+                            <span flex></span>
+                            <div flex>
+                                {{invest.data[0].value.name}}
+                            </div>
+                            <span flex></span>
+                            <md-icon flex md-svg-icon="./img/icons/ic_keyboard_arrow_right_black_24px.svg"></md-icon>
+                        </md-button>
+                    </md-input-container>
+                </md-content>
+
+            </md-sidenav>
+            <div ng-if="investigatorSelected" flex>
+
+                <table>
+                    <tr>
+                        <th>Create Date</th>
+                        <td>{{allInvestigators[investIndex].data[0].value.createdat}}</td>
+                    </tr>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{allInvestigators[investIndex].data[0].value.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{allInvestigators[investIndex].data[0].value.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Modified</th>
+                        <td>{{allInvestigators[investIndex].data[0].value.lastmodified}}</td>
+                    </tr>
+                    <tr>
+                        <th>Public Key</th>
+                        <td>{{allInvestigators[investIndex].data[0].value.publickey}}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <!--                           {{investigator[investId-1].status}}-->
+                            <md-input-container>
+                                <input ng-model="investigator[investId-1].status">
+                            </md-input-container>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </md-content>
+    </div>
+
+</md-content>
+<script type="text/ng-template " id="createInvestigator.tmpl.html ">
+    <md-dialog aria-label="Orders " ng-cloak>
+        <form>
+            <md-toolbar>
+                <div class="md-toolbar-tools ">
+                    <h2>Create Investigator</h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content layout-padding>
+                <div class="md-dialog-content " layout="column ">
+                    <p>Provide name of the new investigator:</p>
+                    <md-input-container>
+                        <label>Name</label>
+                        <input name="invest_name" ng-model="investigatorName " required ng-pattern=" ">
+
+                    </md-input-container>
+                    Provide Public Key:
+                    <br>
+                    <div flex layout="" row>
+                        <md-button ng-click="uploadKey()" class="md-raised md-primary">
+                            File Upload
+                        </md-button>
+                        <span></span>
+                    </div>
+                    <textarea ng-model="publicKey" rows="3" md-select-on-focus placeholder="type key here"></textarea>
+                </div>
+
+            </md-dialog-content>
+
+            <md-dialog-actions layout="row ">
+                <md-button ng-click="cancel()">
+                    Cancel
+                </md-button>
+                <span flex></span>
+                <md-button ng-click="Create()" md-autofocus>
+                    Create
+                </md-button>
+            </md-dialog-actions>
+        </form>
+    </md-dialog>
+</script>
