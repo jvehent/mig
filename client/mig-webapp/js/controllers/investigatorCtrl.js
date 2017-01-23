@@ -21,6 +21,7 @@ app.controller('investigatorCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state
     };
     $http.get('../api/v1/search?type=investigator&investigatorname=%25%25').success(function (response) {
             $scope.allInvestigators = response.collection.items;
+            $scope.allInvestigators.pop();
             //            noOfInvestigators = Object.keys(response.collection.items).length - 1; //-1 because the last object is the 'search parameters'
         })
         .error(function (err) {
