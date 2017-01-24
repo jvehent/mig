@@ -2,8 +2,9 @@ app.controller('investigatorCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state
 
     $scope.investId = 0;
     var noOfInvestigators = 0;
+    $scope.showPgpVar = 1;
+
     $scope.toggleSideNav = function () {
-        //        console.log("here!");
         $mdSidenav('left').toggle();
     }
 
@@ -19,7 +20,10 @@ app.controller('investigatorCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state
         publickey: "",
         status: ""
     };
+
+    /*Note:calling for list of all investigators and not limiting it to 10. make a 'load more' button if you limit to 10*/
     $http.get('../api/v1/search?type=investigator&investigatorname=%25%25').success(function (response) {
+            console.log(response);
             $scope.allInvestigators = response.collection.items;
             $scope.allInvestigators.pop();
             //            noOfInvestigators = Object.keys(response.collection.items).length - 1; //-1 because the last object is the 'search parameters'
@@ -108,6 +112,17 @@ app.controller('investigatorCtrl', ['$scope', '$mdDialog', '$mdSidenav', '$state
 
 
 
+    $scope.updateInvestigator = function (investigatorIndex) {
+        console.log(investigatorIndex);
+        console.log($scope.allInvestigators[investigatorIndex]);
+    }
+
+    $scope.showPgp = function (op) {
+        if (op == 0)
+            $scope.showPgpVar = 1;
+        if (op == 1)
+            $scope.showPgpVar = 0;
+    }
 
             }])
 

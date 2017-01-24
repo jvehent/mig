@@ -28,7 +28,7 @@
 </section>
 
 
-<md-toolbar class="md-hue-4" ng-cloak>
+<md-toolbar id="homeToolbar" class="md-hue-4" ng-cloak>
     <div class="md-toolbar-tools">
         <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="modules label">
             <md-icon md-svg-icon="./img/icons/ic_menu_white_24px.svg"></md-icon>
@@ -207,7 +207,7 @@
                             <p ng-if="!dashboard[0].data[4].value ">none</p>
                         </ul>
                         <h3>Latest Actions:</h3>
-                        <table flex style="width:100% ">
+                        <table id="homeTable" flex>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>

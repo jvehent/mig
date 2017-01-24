@@ -54,3 +54,11 @@
 th {
     text-align: left;
 }
+
+#homeToolbar {
+    background-color:#1A237E;
+}
+
+#homeTable {
+    width:100% ;
+}
